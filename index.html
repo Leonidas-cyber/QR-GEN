@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generador de Códigos QR</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>
+  <img src="favicon.png" alt="Logo" style="height:90px; vertical-align:middle; margin-right:10px;">
+  Generador de Códigos QR
+</h1>
+
+    <div class="form-grid">
+      <div class="form-section">
+        <h3>📝 Contenido del QR</h3>
+
+        <div class="form-group">
+          <label for="qrType">Tipo de contenido:</label>
+          <select id="qrType">
+            <option value="text">Texto libre</option>
+            <option value="url">URL/Enlace web</option>
+            <option value="email">Email</option>
+            <option value="phone">Teléfono</option>
+            <option value="wifi">WiFi</option>
+            <option value="sms">SMS</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="qrText">Contenido:</label>
+          <textarea id="qrText" placeholder="Introduce el texto o datos para el código QR"></textarea>
+        </div>
+
+        <div id="wifiFields" style="display:none;">
+          <div class="form-group">
+            <label for="wifiSSID">Nombre de red (SSID):</label>
+            <input type="text" id="wifiSSID" placeholder="Nombre de tu red WiFi" />
+          </div>
+          <div class="form-group">
+            <label for="wifiPassword">Contraseña:</label>
+            <input type="text" id="wifiPassword" placeholder="Contraseña de la red" />
+          </div>
+          <div class="form-group">
+            <label for="wifiSecurity">Tipo de seguridad:</label>
+            <select id="wifiSecurity">
+              <option value="WPA">WPA/WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">Sin contraseña</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="wifiHidden" /> Red oculta</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>🎨 Opciones de diseño</h3>
+
+        <div class="form-group">
+          <label for="qrSize">Tamaño del QR:</label>
+          <div class="range-container">
+            <input type="range" id="qrSize" min="200" max="800" value="300"/>
+            <span class="range-value" id="sizeValue">300px</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="marginSize">Margen para impresión:</label>
+          <div class="range-container">
+            <input type="range" id="marginSize" min="0" max="50" value="20"/>
+            <span class="range-value" id="marginValue">20px</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Colores:</label>
+          <div class="color-input-group">
+            <div>
+              <label for="foregroundColor">Color del QR:</label>
+              <input type="color" id="foregroundColor" value="#000000"/>
+            </div>
+            <div>
+              <label for="backgroundColor">Color de fondo:</label>
+              <input type="color" id="backgroundColor" value="#ffffff"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="errorCorrectionLevel">Nivel de corrección de errores:</label>
+          <select id="errorCorrectionLevel">
+            <option value="L">Bajo (7%)</option>
+            <option value="M" selected>Medio (15%)</option>
+            <option value="Q">Alto (25%)</option>
+            <option value="H">Muy alto (30%)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-generate" id="btnGenerate">✨ Generar Código QR</button>
+
+    <div id="messages"></div>
+
+    <div class="qr-preview" id="qrPreview" style="display:none;">
+      <h3>📱 Vista previa</h3>
+      <div id="qrContainer" class="qr-container">
+        <canvas id="qrCanvas"></canvas>
+      </div>
+      <div class="info-text">El margen ayuda a asegurar que el código QR se lea correctamente al imprimir</div>
+      <div class="download-section">
+        <button class="btn-download" onclick="downloadQR('png')">📁 Descargar PNG</button>
+        <button class="btn-download" onclick="downloadQR('jpg')">📁 Descargar JPG</button>
+        <button class="btn-download" onclick="printQR()">🖨️ Imprimir</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
